@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>
+    Offres disponibles
+</h1>
+<a href="addOffer">Poster</a>
+<br/>
+<br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Period</th>
+            <th>nb of candidates</th>
+            <th>location</th>
+        </tr>
+        <tr th:if="${allOffers.isEmpty()}">
+            <td colspan="2"> No Offers Available </td>
+        </tr>
+        <tr th:each = "offre : ${allOffers}">
+            <div th:if="${offre.isAvailable}">
+                <td><span th:text="${offre.getTitle()}">Title</span></td>
+                <td><span th:text="${offre.getDescription()}"> description </span></td>
+                <td><span th:text="${offre.getPeriod()}"> period </span></td>
+                <td><span th:text="${offre.getNbCandidates()}"> nbCandidates </span></td>
+                <td><span th:text="${offre.getLocation()}"> location </span></td>
+            </div>
+
+        </tr>
+    </table>
+</div>
+</body>
+</html>
