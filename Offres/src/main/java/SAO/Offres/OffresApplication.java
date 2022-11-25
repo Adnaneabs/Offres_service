@@ -21,5 +21,12 @@ public class OffresApplication {
 
 		};
 	}
+	@Bean
+	CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
+		return args -> {
+			kafkaTemplate.send("topic_1", "hello kafka");
+
+		};
+	}
 	*/
 }
