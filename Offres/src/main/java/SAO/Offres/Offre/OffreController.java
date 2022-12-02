@@ -1,7 +1,11 @@
 package SAO.Offres.Offre;
 
+import SAO.Offres.Controller.ViewController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +17,12 @@ public class OffreController {
 
     public OffreController(OffreService offreService) {
         this.offreService = offreService;
+    }
+    public ViewController viewController;
+
+    @GetMapping("/byEmployer")
+    public List<Offre> getByEmployer(@RequestParam("idEmployer") Long idE) throws Exception {
+        return offreService.AllOffersByIdE(idE);
     }
 
     @PostMapping
@@ -38,8 +48,28 @@ public class OffreController {
     }
 
     @GetMapping("search")
-    public Offre getBytTitle(@RequestParam("title") String Title) throws Exception {
-        System.out.println(offreService.loadOffreByTitle(Title).getDescription());
-        return offreService.loadOffreByTitle(Title);
+    public List<Offre> getBytTitle(@RequestParam("title") String Title) throws Exception {
+        return offreService.loadAllOffersByTitle(Title);
     }
+
+    @GetMapping("offerByEmployer")
+    public List<Offre> getByEmailEmployer(@RequestParam("email") String email) throws Exception {
+        return offreService.loadAllOffersOfEmployer(email);
+    }
+
+    @PostMapping("/apply")
+    public String apply(@RequestParam("idOffer") Long idO) throws Exception {
+        offreService.candidateAccepted(idO);
+        return "Ok";
+    }
+/*
+    @GetMapping("/idO")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Long> getId(@RequestParam("idO") Long idO){
+        String email = userService.getUsername();
+        System.out.println(userService.getEmployeurId(email));
+        return new ResponseEntity<Long>(userService.getEmployeurId(email), HttpStatus.OK);
+    }
+*/
 }
