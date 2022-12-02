@@ -39,6 +39,8 @@ public class OffreService{
         return "done" ;
     }
 
+
+
     public String candidateAccepted(Long idO){
         offreRepository.acceptedOne(idO);
         return "done";
